@@ -3,15 +3,19 @@ TA-ivanti-ism
 
        Original Author: Greg Ford
        Current maintainers: Greg Ford
-       Version/Date: 1.3 / 18 August 2021
+       Version/Date: 1.3.2 / 2 Dec 2021
        Sourcetype: ivanti:ism:incident, ivanti:ism:servicereq, ivanti:ism:problem
        Has index-time ops: false
 
 Update History
 ----------------------------
+       1.31 Dec 2, 2021
+       --------
+       Added redundant checks to ism.py to appease the cloud vetting https-only requirement
+
        1.30 Aug 18, 2021
        --------
-       Rebuilt using Add-On Builder 4 to address jQuery and Pythong dependencies.
+       Rebuilt using Add-On Builder 4 to address jQuery and Python dependencies.
 
        1.20 May 5, 2021
        --------
