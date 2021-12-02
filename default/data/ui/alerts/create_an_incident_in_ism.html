@@ -1,0 +1,51 @@
+<form class="form-horizontal form-complex">
+<div class="control-group">
+	<label class="control-label" for="create_an_incident_in_ism_customer">Customer LoginID <span class="required">*</span> </label>
+    <div class="controls">
+	<input type="text" name="action.create_an_incident_in_ism.param.customer" id="create_an_incident_in_ism_customer"/>
+    </div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="create_an_incident_in_ism_summary">Summary <span class="required">*</span> </label>
+    <div class="controls">
+	<input type="text" name="action.create_an_incident_in_ism.param.summary" id="create_an_incident_in_ism_summary"/>
+    </div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="create_an_incident_in_ism_description">Description <span class="required">*</span> </label>
+    <div class="controls">
+	<input type="text" name="action.create_an_incident_in_ism.param.description" id="create_an_incident_in_ism_description"/>
+    </div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="create_an_incident_in_ism_status">Status <span class="required">*</span> </label>
+    <div class="controls">
+	<input type="text" name="action.create_an_incident_in_ism.param.status" id="create_an_incident_in_ism_status"/>
+    </div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="create_an_incident_in_ism_custom_fields">Custom fields  </label>
+    <div class="controls">
+	<input type="text" name="action.create_an_incident_in_ism.param.custom_fields" id="create_an_incident_in_ism_custom_fields"/>
+                <span class="help-block"> 
+                    Optional JSON object containing additional fields to set e.g. {"isVIP", "false"}
+                </span>
+    </div>
+</div>
+<div class="control-group">
+	<label class="control-label">Incident Type</label>
+		<div class="controls">
+				<label class="radio" for="create_an_incident_in_ism_incident_type_standard">
+					<input type="radio" name="action.create_an_incident_in_ism.param.incident_type" id="create_an_incident_in_ism_incident_type_standard" value="standard"/>
+					Standard
+				</label>
+				<label class="radio" for="create_an_incident_in_ism_incident_type_security">
+					<input type="radio" name="action.create_an_incident_in_ism.param.incident_type" id="create_an_incident_in_ism_incident_type_security" value="security"/>
+					Security (beta)
+				</label>
+                <span class="help-block"> 
+                    Determines whether the  incident will use the new ISM Security Incident business object
+                </span>
+		</div>
+</div>
+</form>

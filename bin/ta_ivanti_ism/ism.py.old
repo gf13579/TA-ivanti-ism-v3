@@ -1,0 +1,60 @@
+import os
+import sys
+import time
+import datetime
+import requests
+import json
+import logging
+try:
+    from urllib import unquote  # Python 2.X
+except ImportError:
+    from urllib.parse import unquote  # Python 3+
+
+def create_incident(auth_token, base_url, payload):
+    path = '/api/odata/businessobject/incidents' 
+    headers = {
+        "Content-Type" : "application/json",
+        "Authorization" : auth_token
+    }
+    url = 'https://' + base_url + path
+
+    response = requests.post(url,data=json.dumps(payload),headers=headers,verify=False)
+
+    # check for status of 201 - Created
+    # get IncidentNumber and log to splunk
+
+    # 401 Unauthorised - dump the json to the logs
+    # 500 Internal Server error for malformed request
+    # 400 Bad request for missing fields - dump the json to logs
+
+    r_json = response.json()
+    #values = response.json()['value']
+    logging.info("count returned by initial query: " + str(int(r_json['@odata.count'])))
+
+    pass
+
+def authenticate(tenant, username, password, role, api_key = ''):
+    base_url = 'https://' + tenant
+    payload = {
+        'tenant': tenant,
+        'username':username,
+        'password':password,
+        'role':role
+    }
+
+    headers = {
+        "Content-Type" : "application/json"
+    }
+    
+    response = requests.post(base_url + '/api/rest/authentication/login',data=json.dumps(payload),headers=headers,verify=False)
+
+    if response.status_code != 200:
+        logging.warning("Failed to connect or authenticate")
+        logging.info(response.content)
+        exit()
+
+    auth_token = (response.content).decode('UTF-8').replace('"','')
+    logging.info("auth_token is " + str(auth_token))
+
+    return auth_token
+
