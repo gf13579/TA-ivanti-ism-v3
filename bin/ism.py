@@ -168,8 +168,9 @@ def get_busobjects(auth_token, base_url, path, parameters, page_size, helper=Non
     }
     url = base_url + path + '?$top=' + str(page_size) + '&$skip=0&' + parameters
 
-    ism_log(text="ism_log: base_url = " + base_url + ",path = " + path + ",parameters = " + parameters + ",verify = " + str(verify) + ",headers=" + str(headers), helper=helper)
-    logging.info(msg="logging.info: base_url = " + base_url + ",path = " + path + ",parameters = " + parameters + ",verify = " + str(verify) + ",headers=" + str(headers))
+    # Logging disabled due to complaint from Cloud Vetting that this is apparently client-sensitive data
+    # ism_log(text="ism_log: base_url = " + base_url + ",path = " + path + ",parameters = " + parameters + ",verify = " + str(verify) + ",headers=" + str(headers), helper=helper)
+    # logging.info(msg="logging.info: base_url = " + base_url + ",path = " + path + ",parameters = " + parameters + ",verify = " + str(verify) + ",headers=" + str(headers))
 
     try:
         response = requests.get(url, headers=headers,verify=verify)

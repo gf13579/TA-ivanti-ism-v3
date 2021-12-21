@@ -3,12 +3,16 @@ TA-ivanti-ism
 
        Original Author: Greg Ford
        Current maintainers: Greg Ford
-       Version/Date: 1.3.2 / 2 Dec 2021
+       Version/Date: 1.3.3 / 21 Dec 2021
        Sourcetype: ivanti:ism:incident, ivanti:ism:servicereq, ivanti:ism:problem
        Has index-time ops: false
 
 Update History
 ----------------------------
+       1.33 Dec 21, 2021
+       --------
+       Addressed logging issues raised by Cloud Vetting
+
        1.31 Dec 2, 2021
        --------
        Added redundant checks to ism.py to appease the cloud vetting https-only requirement
