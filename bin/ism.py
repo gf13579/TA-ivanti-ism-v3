@@ -154,6 +154,11 @@ def get_problems(auth_token, base_url, parameters, helper=None, verify=False):
     # Poll the problems endpoint for incidents matching the supplied value of 'parameters'
     path = '/api/odata/businessobject/problems' 
     return get_busobjects(auth_token, base_url, path, parameters, 100, verify=verify, helper=helper)
+
+def get_changes(auth_token, base_url, parameters, helper=None, verify=False):
+    # Poll the changes endpoint for incidents matching the supplied value of 'parameters'
+    path = '/api/odata/businessobject/changes' 
+    return get_busobjects(auth_token, base_url, path, parameters, 100, verify=verify, helper=helper)
     
 def get_busobjects(auth_token, base_url, path, parameters, page_size, helper=None, verify=False):
     # Helper function to query a given endpoint and handle paging to build a complete result set

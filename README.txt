@@ -3,12 +3,16 @@ TA-ivanti-ism
 
        Original Author: Greg Ford
        Current maintainers: Greg Ford
-       Version/Date: 1.3.3 / 21 Dec 2021
-       Sourcetype: ivanti:ism:incident, ivanti:ism:servicereq, ivanti:ism:problem
+       Version/Date: 1.37 Feb 04, 2022
+       Sourcetype: ivanti:ism:incident, ivanti:ism:servicereq, ivanti:ism:problem, ivanti:ism:change
        Has index-time ops: false
 
 Update History
 ----------------------------
+       1.37 Feb 04, 2022
+       --------
+       Added basic support for polling the Changes endpoint
+
        1.33 Dec 21, 2021
        --------
        Addressed logging issues raised by Cloud Vetting
