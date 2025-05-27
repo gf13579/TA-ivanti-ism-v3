@@ -1,28 +1,13 @@
-[props/ivanti%3Aism%3Achange]
-owner = admin
-version = 8.2.3.2
-modtime = 1643945818.016460000
-
 [passwords/credential%3A__REST_CREDENTIAL__%23TA-ivanti-ism%23configs%2Fconf-ta_ivanti_ism_settings%3Aadditional_parameters%60%60splunk_cred_sep%60%601%3A]
-owner = admin
-version = 8.2.3.2
-modtime = 1643947825.948328000
+owner = splunk-system-user
+version = 9.4.0
+modtime = 1748304536.526106000
 
 [passwords/credential%3A__REST_CREDENTIAL__%23TA-ivanti-ism%23configs%2Fconf-ta_ivanti_ism_settings%3Aadditional_parameters%60%60splunk_cred_sep%60%602%3A]
-owner = admin
-version = 8.2.3.2
-modtime = 1643947825.968757000
+owner = splunk-system-user
+version = 9.4.0
+modtime = 1748304536.552382000
 
 [ta_ivanti_ism_settings/additional_parameters]
-version = 8.2.3.2
-modtime = 1643947825.975678000
-
-[props/ivanti%3Aism%3Achanges]
-owner = admin
-version = 8.2.3.2
-modtime = 1643947060.159159000
-
-[props/delete_me_st]
-owner = admin
-version = 8.2.3.2
-modtime = 1643947534.382109000
+version = 9.4.0
+modtime = 1748304536.562048000
