@@ -32,7 +32,6 @@ def collect_events(helper, ew):
     input_stanza = helper.get_input_stanza()
     opt_username = helper.get_global_setting("username")
     opt_password = helper.get_global_setting("password")
-    opt_verify = helper.get_global_setting("verify_server_certificate")
     opt_role = helper.get_global_setting("role")
     opt_tenant = helper.get_global_setting("tenant")
     opt_api_key = helper.get_global_setting("api_key")
@@ -41,21 +40,13 @@ def collect_events(helper, ew):
     if not opt_tenant.startswith('https://'):
         helper.log_error("Tenant URL *must* start with https://. Abandoning input")
         return
-    
-    helper.log_debug("ISM TA input called with opt_verify: " + str(opt_verify))
-
-    if str(opt_verify)=="False":
-        opt_verify=False
-    else:
-        opt_verify=True
 
     base_url = opt_tenant
 
-    helper.log_debug("ISM TA input now has opt_verify: " + str(opt_verify))
     helper.log_debug("ISM TA input called with base url: " + opt_tenant)
-    auth_token = ism.authenticate(base_url=opt_tenant,username=opt_username,password=opt_password,role=opt_role, api_key=opt_api_key, helper=helper, verify=opt_verify)
+    auth_token = ism.authenticate(base_url=opt_tenant,username=opt_username,password=opt_password,role=opt_role, api_key=opt_api_key, helper=helper)
 
-    values = ism.get_servicereqs(auth_token, opt_tenant, opt_parameters, helper=helper, verify=opt_verify)
+    values = ism.get_servicereqs(auth_token, opt_tenant, opt_parameters, helper=helper)
 
     t =  "%.3f" % time.time()
 

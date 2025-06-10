@@ -33,23 +33,14 @@ def collect_events(helper, ew):
     opt_parameters = unquote(helper.get_arg("parameters"))
     opt_username = helper.get_global_setting("username")
     opt_password = helper.get_global_setting("password")
-    opt_verify = helper.get_global_setting("verify_server_certificate")
     opt_api_key = helper.get_global_setting("api_key")
 
     if not opt_tenant.startswith("https://"):
         helper.log_error("Tenant URL *must* start with https://. Abandoning input")
         return
 
-    helper.log_debug("ISM TA input called with opt_verify: " + str(opt_verify))
-
-    if str(opt_verify) == "False" or str(opt_verify) == "0":
-        opt_verify = False
-    else:
-        opt_verify = True
-
     base_url = opt_tenant
 
-    helper.log_debug("ISM TA input now has opt_verify: " + str(opt_verify))
     helper.log_debug("ISM TA input called with base_url: " + base_url)
     helper.log_debug("Unquoted value of parameters variable is: " + opt_parameters)
 
@@ -59,12 +50,11 @@ def collect_events(helper, ew):
         password=opt_password,
         role=opt_role,
         api_key=opt_api_key,
-        helper=helper,
-        verify=opt_verify,
+        helper=helper
     )
 
     values = ism.get_incidents(
-        auth_token, base_url, opt_parameters, helper=helper, verify=opt_verify
+        auth_token, base_url, opt_parameters, helper=helper
     )
 
     t = "%.3f" % time.time()

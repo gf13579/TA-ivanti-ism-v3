@@ -30,7 +30,6 @@ def create_incident(
     status,
     custom_fields="{}",
     helper=None,
-    verify=False,
     incident_type="standard",
 ):
     # Creates a new incident by building a payload and posting to the incidents endpoint
@@ -70,7 +69,7 @@ def create_incident(
     # Send the request to create the new incident
     try:
         response = requests.post(
-            base_url + path, data=json.dumps(payload), headers=headers, verify=verify
+            base_url + path, data=json.dumps(payload), headers=headers, verify=True
         )
         ism_log("Status code: " + str(response.status_code))
     except Exception as e:
@@ -96,17 +95,17 @@ def create_incident(
     return str(r_json)
 
 
-def get_employee_recid(auth_token, base_url, name, helper=None, verify=False):
+def get_employee_recid(auth_token, base_url, name, helper=None):
     # Get the RecId of an employee based on LoginId
 
     path = "/api/odata/businessobject/employees"
     parameters = "$filter=LoginID eq '" + name + "'"
-    result = get_busobjects(auth_token, base_url, path, parameters, 1, verify=verify)
+    result = get_busobjects(auth_token, base_url, path, parameters, 1)
     return result[0]["RecId"]
 
 
 def authenticate(
-    base_url, username, password, role, api_key="", helper=None, verify=False
+    base_url, username, password, role, api_key="", helper=None
 ):
     # Return an auth token using either api key, or a value returned from authentication/login endpoint for a given username and pw
 
@@ -140,7 +139,7 @@ def authenticate(
         base_url + "/api/rest/authentication/login",
         data=json.dumps(payload),
         headers=headers,
-        verify=verify,
+        verify=True,
     )
 
     if response.status_code != 200:
@@ -153,21 +152,21 @@ def authenticate(
     return auth_token
 
 
-def get_incidents_simple(auth_token, base_url, parameters, helper=None, verify=False):
+def get_incidents_simple(auth_token, base_url, parameters, helper=None):
     # Poll the incidents endpoint for incidents matching the supplied value of 'parameters'
     # Note that this function isn't currently used as get_incidents is an enhanced version that enriches incident objects with SLAs
     path = "/api/odata/businessobject/incidents"
     return get_busobjects(
-        auth_token, base_url, path, parameters, 100, verify=verify, helper=helper
+        auth_token, base_url, path, parameters, 100, helper=helper
     )
 
 
-def get_incidents(auth_token, base_url, parameters, helper=None, verify=False):
+def get_incidents(auth_token, base_url, parameters, helper=None):
     # Poll the incidents endpoint for incidents matching the supplied value of 'parameters'
     # Queries the Frs_data_escalation_watchs endpoint to get SLAs for the incidents
     path = "/api/odata/businessobject/incidents"
     incs = get_busobjects(
-        auth_token, base_url, path, parameters, 100, verify=verify, helper=helper
+        auth_token, base_url, path, parameters, 100, helper=helper
     )
 
     breaches = get_busobjects(
@@ -176,7 +175,6 @@ def get_incidents(auth_token, base_url, parameters, helper=None, verify=False):
         "/api/odata/businessobject/Frs_data_escalation_watchs",
         "$filter=ClockState eq 'Run' and ParentLink_Category eq 'Incident'&$select=L3Passed, BreachPassed, BreachDateTime, RecId",
         100,
-        verify=verify,
     )
 
     if breaches is None:
@@ -193,32 +191,32 @@ def get_incidents(auth_token, base_url, parameters, helper=None, verify=False):
     return incs
 
 
-def get_servicereqs(auth_token, base_url, parameters, helper=None, verify=False):
+def get_servicereqs(auth_token, base_url, parameters, helper=None):
     # Poll the servicereqs endpoint for incidents matching the supplied value of 'parameters'
     path = "/api/odata/businessobject/servicereqs"
     return get_busobjects(
-        auth_token, base_url, path, parameters, 100, verify=verify, helper=helper
+        auth_token, base_url, path, parameters, 100, helper=helper
     )
 
 
-def get_problems(auth_token, base_url, parameters, helper=None, verify=False):
+def get_problems(auth_token, base_url, parameters, helper=None):
     # Poll the problems endpoint for incidents matching the supplied value of 'parameters'
     path = "/api/odata/businessobject/problems"
     return get_busobjects(
-        auth_token, base_url, path, parameters, 100, verify=verify, helper=helper
+        auth_token, base_url, path, parameters, 100, helper=helper
     )
 
 
-def get_changes(auth_token, base_url, parameters, helper=None, verify=False):
+def get_changes(auth_token, base_url, parameters, helper=None):
     # Poll the changes endpoint for incidents matching the supplied value of 'parameters'
     path = "/api/odata/businessobject/changes"
     return get_busobjects(
-        auth_token, base_url, path, parameters, 100, verify=verify, helper=helper
+        auth_token, base_url, path, parameters, 100, helper=helper
     )
 
 
 def get_busobjects(
-    auth_token, base_url, path, parameters, page_size, helper=None, verify=False
+    auth_token, base_url, path, parameters, page_size, helper=None
 ):
     # Helper function to query a given endpoint and handle paging to build a complete result set
 
@@ -229,12 +227,8 @@ def get_busobjects(
     headers = {"Content-Type": "application/json", "Authorization": auth_token}
     url = base_url + path + "?$top=" + str(page_size) + "&$skip=0&" + parameters
 
-    # Logging disabled due to complaint from Cloud Vetting that this is apparently client-sensitive data
-    # ism_log(text="ism_log: base_url = " + base_url + ",path = " + path + ",parameters = " + parameters + ",verify = " + str(verify) + ",headers=" + str(headers), helper=helper)
-    # logging.info(msg="logging.info: base_url = " + base_url + ",path = " + path + ",parameters = " + parameters + ",verify = " + str(verify) + ",headers=" + str(headers))
-
     try:
-        response = requests.get(url, headers=headers, verify=verify)
+        response = requests.get(url, headers=headers, verify=True)
         ism_log("Status code: " + str(response.status_code))
     except Exception as e:
         ism_log("Exception message: " + repr(str(e)))
@@ -269,7 +263,7 @@ def get_busobjects(
                 + "&"
                 + parameters
             )
-            response = requests.get(request_str, headers=headers, verify=verify)
+            response = requests.get(request_str, headers=headers, verify=True)
             j2 = response.json()
             values.extend(j2["value"])
 

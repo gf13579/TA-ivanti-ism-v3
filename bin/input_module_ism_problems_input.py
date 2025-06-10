@@ -29,7 +29,6 @@ def collect_events(helper, ew):
     opt_username = helper.get_global_setting("username")
     opt_password = helper.get_global_setting("password")
     opt_api_key = helper.get_global_setting("api_key")
-    opt_verify = helper.get_global_setting("verify_server_certificate")
     opt_role = helper.get_global_setting("role")
     opt_tenant = helper.get_global_setting("tenant")
     opt_parameters = unquote(helper.get_arg('parameters'))
@@ -37,22 +36,14 @@ def collect_events(helper, ew):
     if not opt_tenant.startswith('https://'):
         helper.log_error("Tenant URL *must* start with https://. Abandoning input")
         return
-    
-    helper.log_debug("ISM TA input called with opt_verify: " + str(opt_verify))
-
-    if str(opt_verify)=="False":
-        opt_verify=False
-    else:
-        opt_verify=True
 
     base_url = opt_tenant
 
-    helper.log_debug("ISM TA input now has opt_verify: " + str(opt_verify))
     helper.log_debug("ISM TA input called with base url: " + opt_tenant)
     helper.log_debug("Unquoted value of parameters variable is: " + opt_parameters)
 
-    auth_token = ism.authenticate(base_url=opt_tenant,username=opt_username,password=opt_password,role=opt_role, api_key=opt_api_key, helper=helper, verify=opt_verify)
-    values = ism.get_problems(auth_token, opt_tenant, opt_parameters, helper, verify=opt_verify)
+    auth_token = ism.authenticate(base_url=opt_tenant,username=opt_username,password=opt_password,role=opt_role, api_key=opt_api_key, helper=helper)
+    values = ism.get_problems(auth_token, opt_tenant, opt_parameters, helper)
 
     t =  "%.3f" % time.time()
 

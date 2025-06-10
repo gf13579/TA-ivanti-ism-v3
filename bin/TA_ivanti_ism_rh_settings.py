@@ -75,13 +75,6 @@ fields_additional_parameters = [
             min_len=0, 
             max_len=8192, 
         )
-    ), 
-    field.RestField(
-        'verify_server_certificate',
-        required=False,
-        encrypted=False,
-        default=True,
-        validator=None
     )
 ]
 model_additional_parameters = RestModel(fields_additional_parameters, name='additional_parameters')

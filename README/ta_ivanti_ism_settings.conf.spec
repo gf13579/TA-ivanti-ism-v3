@@ -7,4 +7,3 @@ api_key =
 username = 
 password = 
 role = 
-verify_server_certificate = 
