@@ -3,12 +3,16 @@ TA-ivanti-ism
 
        Original Author: Greg Ford
        Current maintainers: Greg Ford
-       Version/Date: 1.40 May 27, 2025
+       Version/Date: 1.42 Jun 10, 2025
        Sourcetype: ivanti:ism:incident, ivanti:ism:servicereq, ivanti:ism:problem, ivanti:ism:change
        Has index-time ops: false
 
 Update History
 ----------------------------
+       1.42 Jun 10, 2025
+       --------
+       Removed ability for admin to disable TLS verification
+
        1.40 May 27, 2025
        --------
        Updated AOB scripts and addressed other Splunk Cloud vetting issues
