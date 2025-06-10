@@ -140,14 +140,6 @@
                             "options": {
                                 "placeholder": "Service Desk Analyst"
                             }
-                        },
-                        {
-                            "field": "verify_server_certificate",
-                            "label": "Verify server certificate",
-                            "type": "checkbox",
-                            "help": "Uncheck to ignore SSL server cert validation errors",
-                            "required": false,
-                            "defaultValue": true
                         }
                     ]
                 }
