@@ -1,16 +1,16 @@
 [passwords/credential%3A__REST_CREDENTIAL__%23TA-ivanti-ism%23configs%2Fconf-ta_ivanti_ism_settings%3Aadditional_parameters%60%60splunk_cred_sep%60%601%3A]
 owner = admin
 version = 9.4.0
-modtime = 1749552497.863758000
+modtime = 1757030648.586691000
 
 [passwords/credential%3A__REST_CREDENTIAL__%23TA-ivanti-ism%23configs%2Fconf-ta_ivanti_ism_settings%3Aadditional_parameters%60%60splunk_cred_sep%60%602%3A]
 owner = admin
 version = 9.4.0
-modtime = 1749552497.876566000
+modtime = 1757030648.625157000
 
 [ta_ivanti_ism_settings/additional_parameters]
 version = 9.4.0
-modtime = 1749552497.887066000
+modtime = 1757030648.635986000
 
 [inputs/ism_problems_input%3A%2F%2Fgf_probs_input_02]
 owner = admin
@@ -31,3 +31,13 @@ modtime = 1749552992.319181000
 owner = admin
 version = 9.4.0
 modtime = 1749552964.599367000
+
+[inputs/ism_problems_input%3A%2F%2Fawan_test_problems]
+owner = admin
+version = 9.4.0
+modtime = 1757030661.999730000
+
+[inputs/ism_service_requests_input%3A%2F%2Fawan_test_srs]
+owner = admin
+version = 9.4.0
+modtime = 1757030011.594290000

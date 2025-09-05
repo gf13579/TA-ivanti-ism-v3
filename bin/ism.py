@@ -169,6 +169,8 @@ def get_incidents(auth_token, base_url, parameters, helper=None):
         auth_token, base_url, path, parameters, 100, helper=helper
     )
 
+    incs = incs or []
+
     breaches = get_busobjects(
         auth_token,
         base_url,
@@ -194,25 +196,44 @@ def get_incidents(auth_token, base_url, parameters, helper=None):
 def get_servicereqs(auth_token, base_url, parameters, helper=None):
     # Poll the servicereqs endpoint for incidents matching the supplied value of 'parameters'
     path = "/api/odata/businessobject/servicereqs"
-    return get_busobjects(
+
+    servicereqs_list = get_busobjects(
         auth_token, base_url, path, parameters, 100, helper=helper
     )
+
+    servicereqs_list = servicereqs_list or []
+
+    # Remove 'Symptom' from all of those JSON objects if present
+    if servicereqs_list:
+        for servicereq in servicereqs_list:
+            if isinstance(servicereq, dict) and "Symptom" in servicereq:
+                del servicereq["Symptom"]
+
+    return servicereqs_list
+
 
 
 def get_problems(auth_token, base_url, parameters, helper=None):
     # Poll the problems endpoint for incidents matching the supplied value of 'parameters'
     path = "/api/odata/businessobject/problems"
-    return get_busobjects(
+    problems_list = get_busobjects(
         auth_token, base_url, path, parameters, 100, helper=helper
     )
+
+    problems_list = problems_list or []
+
+    return problems_list
 
 
 def get_changes(auth_token, base_url, parameters, helper=None):
     # Poll the changes endpoint for incidents matching the supplied value of 'parameters'
     path = "/api/odata/businessobject/changes"
-    return get_busobjects(
+    changes_list = get_busobjects(
         auth_token, base_url, path, parameters, 100, helper=helper
     )
+
+    changes_list = changes_list or []
+    return changes_list
 
 
 def get_busobjects(
