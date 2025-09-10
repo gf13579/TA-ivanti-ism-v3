@@ -2,3 +2,6 @@
 __pycache__/*
 passwords.conf
 local.meta
+metadata/local.meta
+local/*
+local/inputs.conf

@@ -13,6 +13,11 @@ try:
 except ImportError:
     from urllib.parse import unquote  # Python 3+
 
+# For debugging
+# sys.path.append(os.path.join(os.environ['SPLUNK_HOME'],'etc','apps','SA-VSCode','bin'))
+# import splunk_debug as dbg
+# dbg.enable_debugging(timeout=25)
+
 
 def ism_log(text, helper=None):
     if helper is not None:
@@ -130,8 +135,8 @@ def authenticate(
     redacted_payload = copy.copy(payload)
     redacted_payload["password"] = "redacted"
     ism_log(helper=helper, text=str(json.dumps(redacted_payload)))
-    ism_log(helper=helper, text="Verify is {0}".format(str(verify)))
-    ism_log(helper=helper, text="The type of verify is {0}".format(str(type(verify))))
+    # ism_log(helper=helper, text="Verify is {0}".format(str(verify)))
+    # ism_log(helper=helper, text="The type of verify is {0}".format(str(type(verify))))
 
     headers = {"Content-Type": "application/json"}
 
@@ -184,8 +189,8 @@ def get_incidents(auth_token, base_url, parameters, helper=None):
 
     breach_times = {}
     for b in breaches:
-        if b["BreachPassed"] == False:
-            breach_times[b["RecId"]] = b["BreachDateTime"]
+        # No longer checking if b["BreachPassed"] == False as we want BDTs even for passed breaches
+        breach_times[b["RecId"]] = b["BreachDateTime"]
     for i in incs:
         if i["ResolutionEscLink_RecID"] in breach_times:
             i["BreachDateTime"] = breach_times[i["ResolutionEscLink_RecID"]]
@@ -203,11 +208,30 @@ def get_servicereqs(auth_token, base_url, parameters, helper=None):
 
     servicereqs_list = servicereqs_list or []
 
-    # Remove 'Symptom' from all of those JSON objects if present
+    # Remove 'Symptom' from all of those JSON objects if present, as it can be a huge field
     if servicereqs_list:
         for servicereq in servicereqs_list:
             if isinstance(servicereq, dict) and "Symptom" in servicereq:
                 del servicereq["Symptom"]
+
+    breaches = get_busobjects(
+        auth_token,
+        base_url,
+        "/api/odata/businessobject/Frs_data_escalation_watchs",
+        "$filter=ClockState eq 'Run' and ParentLink_Category eq 'ServiceReq'&$select=L3Passed, BreachPassed, BreachDateTime, RecId",
+        100,
+    )
+
+    if breaches is None:
+        return servicereqs_list
+
+    breach_times = {}
+    for b in breaches:
+        # if b["BreachPassed"] == False:
+        breach_times[b["RecId"]] = b["BreachDateTime"]
+    for sr in servicereqs_list:
+        if sr["ResolutionEscLink_RecID"] in breach_times:
+            sr["BreachDateTime"] = breach_times[sr["ResolutionEscLink_RecID"]]
 
     return servicereqs_list
 
